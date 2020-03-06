@@ -2171,6 +2171,8 @@
 // FSMC display (MKS Robin, Alfawise U20, JGAurora A5S, REXYZ A1, etc.)
 //
 #define FSMC_GRAPHICAL_TFT
+// Define for FLSUN Q5. Comment for qq-s
+#define TFT_SCREEN_ROTATE_180
 
 //=============================================================================
 //============================  Other Controllers  ============================
@@ -2188,6 +2190,9 @@
   #define XPT2046_Y_CALIBRATION  -8981
   #define XPT2046_X_OFFSET       -43
   #define XPT2046_Y_OFFSET        257
+
+  // Rotate screen for FLSUN Q5
+  #define XPT2046_ROTATE_180
 #endif
 
 //

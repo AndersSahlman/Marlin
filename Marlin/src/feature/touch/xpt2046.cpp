@@ -40,6 +40,9 @@
   #define TOUCH_CS_PIN   CS_PIN
 #endif
 
+#define TOUCH_MAX_X 320
+#define TOUCH_MAX_Y 240
+
 XPT2046 touch;
 extern int8_t encoderDiff;
 
@@ -74,9 +77,14 @@ uint8_t XPT2046::read_buttons() {
   // We rely on XPT2046 compatible mode to ADS7843, hence no Z1 and Z2 measurements possible.
 
   if (!isTouched()) return 0;
-  const uint16_t x = uint16_t(((uint32_t(getInTouch(XPT2046_X))) * tsoffsets[0]) >> 16) + tsoffsets[1],
+  uint16_t x = uint16_t(((uint32_t(getInTouch(XPT2046_X))) * tsoffsets[0]) >> 16) + tsoffsets[1],
                  y = uint16_t(((uint32_t(getInTouch(XPT2046_Y))) * tsoffsets[2]) >> 16) + tsoffsets[3];
   if (!isTouched()) return 0; // Fingers must still be on the TS for a valid read.
+
+  #ifdef XPT2046_ROTATE_180
+        x = TOUCH_MAX_X - x;
+        y = TOUCH_MAX_Y - y;
+  #endif
 
   if (y < 175 || y > 234) return 0;
 
